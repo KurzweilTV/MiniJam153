@@ -1,0 +1,132 @@
+[gd_scene load_steps=14 format=3 uid="uid://clmjklxuclfga"]
+
+[ext_resource type="Texture2D" uid="uid://coiejxkbxq8fb" path="res://art/truck.png" id="1_geuhu"]
+[ext_resource type="Texture2D" uid="uid://djxtbc6tr2b4e" path="res://art/smoke.png" id="1_oxp80"]
+[ext_resource type="Script" path="res://scripts/player_truck.gd" id="1_xbpno"]
+
+[sub_resource type="Gradient" id="Gradient_i6306"]
+offsets = PackedFloat32Array(0.753247, 1)
+colors = PackedColorArray(0, 0, 0, 0.27451, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_u87xd"]
+gradient = SubResource("Gradient_i6306")
+fill = 1
+fill_from = Vector2(0.518349, 0.504587)
+fill_to = Vector2(0.495413, 0)
+
+[sub_resource type="Curve" id="Curve_k508y"]
+min_value = 0.1
+_data = [Vector2(0, 0.1), 0.0, 0.281015, 0, 1, Vector2(0.256818, 0.17217), 0.0, 0.0, 0, 0, Vector2(1, 0.5), 0.441117, 0.0, 1, 0]
+point_count = 3
+
+[sub_resource type="Gradient" id="Gradient_mlyhb"]
+offsets = PackedFloat32Array(0.132013, 0.547855, 0.788779)
+colors = PackedColorArray(0.00298022, 0.0126157, 0.080883, 0.776471, 0.556863, 0.556863, 0.556863, 0.764706, 1, 1, 1, 0)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pdqbc"]
+atlas = ExtResource("1_geuhu")
+region = Rect2(0, 0, 256, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5rc3f"]
+atlas = ExtResource("1_geuhu")
+region = Rect2(256, 0, 256, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_s4v7j"]
+atlas = ExtResource("1_geuhu")
+region = Rect2(512, 0, 256, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uysow"]
+atlas = ExtResource("1_geuhu")
+region = Rect2(768, 0, 256, 128)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_t8ebb"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pdqbc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5rc3f")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_s4v7j")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_uysow")
+}],
+"loop": true,
+"name": &"drive",
+"speed": 8.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_n73r5"]
+size = Vector2(238, 40)
+
+[node name="PlayerTruck" type="CharacterBody2D"]
+script = ExtResource("1_xbpno")
+
+[node name="Shadow" type="TextureRect" parent="."]
+offset_left = -118.0
+offset_top = 48.0
+offset_right = 129.0
+offset_bottom = 64.0
+texture = SubResource("GradientTexture2D_u87xd")
+expand_mode = 1
+
+[node name="Smoke" type="CPUParticles2D" parent="."]
+z_index = 2
+position = Vector2(43, -45)
+emitting = false
+amount = 400
+lifetime = 10.0
+randomness = 0.4
+lifetime_randomness = 0.5
+draw_order = 1
+texture = ExtResource("1_oxp80")
+direction = Vector2(2.08165e-12, -1)
+gravity = Vector2(2.08165e-12, -20)
+initial_velocity_max = 5.0
+angular_velocity_min = 10.0
+angular_velocity_max = 50.0
+radial_accel_max = 10.0
+damping_max = 5.0
+scale_amount_min = 0.01
+scale_amount_max = 0.3
+scale_amount_curve = SubResource("Curve_k508y")
+color_ramp = SubResource("Gradient_mlyhb")
+
+[node name="SmokeIdle" type="CPUParticles2D" parent="."]
+z_index = 2
+position = Vector2(43, -45)
+amount = 30
+lifetime = 10.0
+randomness = 0.4
+lifetime_randomness = 0.5
+draw_order = 1
+texture = ExtResource("1_oxp80")
+direction = Vector2(2.08165e-12, -1)
+gravity = Vector2(2.08165e-12, -20)
+initial_velocity_max = 5.0
+angular_velocity_min = 10.0
+angular_velocity_max = 50.0
+radial_accel_max = 10.0
+damping_max = 5.0
+scale_amount_min = 0.01
+scale_amount_max = 0.3
+scale_amount_curve = SubResource("Curve_k508y")
+color_ramp = SubResource("Gradient_mlyhb")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
+sprite_frames = SubResource("SpriteFrames_t8ebb")
+animation = &"drive"
+frame_progress = 0.396319
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
+position = Vector2(0, 29)
+shape = SubResource("RectangleShape2D_n73r5")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(1.5, 1.5)
+position_smoothing_enabled = true
