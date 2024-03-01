@@ -1,10 +1,10 @@
-[gd_scene load_steps=6 format=3 uid="uid://8ybxfnajqph6"]
+[gd_scene load_steps=7 format=3 uid="uid://8ybxfnajqph6"]
 
 [ext_resource type="PackedScene" uid="uid://clmjklxuclfga" path="res://actors/player_truck.tscn" id="1_4actx"]
 
 [sub_resource type="Gradient" id="Gradient_i46fw"]
 offsets = PackedFloat32Array(0, 0.168831)
-colors = PackedColorArray(1, 1, 1, 1, 0, 0.211765, 0.454902, 1)
+colors = PackedColorArray(1, 1, 1, 1, 0.16601, 0.538618, 0.999959, 1)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_dalho"]
 gradient = SubResource("Gradient_i46fw")
@@ -19,7 +19,13 @@ colors = PackedColorArray(1, 0.741176, 0.478431, 1, 0.0175668, 0.00577922, 1.058
 gradient = SubResource("Gradient_kxdtv")
 fill_to = Vector2(0.486957, 1)
 
+[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_4wrw2"]
+polygon = PackedVector2Array(1068, -25, 35221, -19, 35220, -11, 580, -15, 581, -29)
+
 [node name="Desert" type="Node2D"]
+
+[node name="CanvasModulate" type="CanvasModulate" parent="."]
+color = Color(0.54902, 0.513726, 0.870588, 1)
 
 [node name="Sky" type="TextureRect" parent="."]
 offset_left = -749.0
@@ -35,6 +41,11 @@ offset_top = 489.0
 offset_right = 34641.0
 offset_bottom = 2494.0
 texture = SubResource("GradientTexture2D_gsx8e")
+
+[node name="LightOccluder2D" type="LightOccluder2D" parent="Ground"]
+show_behind_parent = true
+position = Vector2(175, 34)
+occluder = SubResource("OccluderPolygon2D_4wrw2")
 
 [node name="PlayerTruck" parent="." instance=ExtResource("1_4actx")]
 position = Vector2(383, 436)

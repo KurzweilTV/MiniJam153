@@ -1,8 +1,12 @@
-[gd_scene load_steps=14 format=3 uid="uid://clmjklxuclfga"]
+[gd_scene load_steps=18 format=3 uid="uid://clmjklxuclfga"]
 
-[ext_resource type="Texture2D" uid="uid://coiejxkbxq8fb" path="res://art/truck.png" id="1_geuhu"]
 [ext_resource type="Texture2D" uid="uid://djxtbc6tr2b4e" path="res://art/smoke.png" id="1_oxp80"]
 [ext_resource type="Script" path="res://scripts/player_truck.gd" id="1_xbpno"]
+[ext_resource type="Script" path="res://actors/Inventory.gd" id="3_0y4wk"]
+[ext_resource type="Texture2D" uid="uid://bmy3a3el42ir1" path="res://art/truckbody.png" id="4_h2234"]
+[ext_resource type="Texture2D" uid="uid://bblkr6mobh0uo" path="res://art/truck_wheels.png" id="5_75xod"]
+[ext_resource type="Texture2D" uid="uid://cjlq75ucwmalf" path="res://art/effects/flare.png" id="6_8duo5"]
+[ext_resource type="Texture2D" uid="uid://ba4dnfuv4a8sw" path="res://art/effects/headlight_beam.png" id="7_ck32o"]
 
 [sub_resource type="Gradient" id="Gradient_i6306"]
 offsets = PackedFloat32Array(0.753247, 1)
@@ -23,36 +27,36 @@ point_count = 3
 offsets = PackedFloat32Array(0.132013, 0.547855, 0.788779)
 colors = PackedColorArray(0.00298022, 0.0126157, 0.080883, 0.776471, 0.556863, 0.556863, 0.556863, 0.764706, 1, 1, 1, 0)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_pdqbc"]
-atlas = ExtResource("1_geuhu")
+[sub_resource type="AtlasTexture" id="AtlasTexture_fbknl"]
+atlas = ExtResource("5_75xod")
 region = Rect2(0, 0, 256, 128)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_5rc3f"]
-atlas = ExtResource("1_geuhu")
+[sub_resource type="AtlasTexture" id="AtlasTexture_31rrn"]
+atlas = ExtResource("5_75xod")
 region = Rect2(256, 0, 256, 128)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_s4v7j"]
-atlas = ExtResource("1_geuhu")
+[sub_resource type="AtlasTexture" id="AtlasTexture_xbvaq"]
+atlas = ExtResource("5_75xod")
 region = Rect2(512, 0, 256, 128)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_uysow"]
-atlas = ExtResource("1_geuhu")
+[sub_resource type="AtlasTexture" id="AtlasTexture_f7343"]
+atlas = ExtResource("5_75xod")
 region = Rect2(768, 0, 256, 128)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_t8ebb"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_pdqbc")
+"texture": SubResource("AtlasTexture_fbknl")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_5rc3f")
+"texture": SubResource("AtlasTexture_31rrn")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_s4v7j")
+"texture": SubResource("AtlasTexture_xbvaq")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_uysow")
+"texture": SubResource("AtlasTexture_f7343")
 }],
 "loop": true,
 "name": &"drive",
@@ -64,6 +68,22 @@ size = Vector2(238, 40)
 
 [node name="PlayerTruck" type="CharacterBody2D"]
 script = ExtResource("1_xbpno")
+
+[node name="Headlight" type="PointLight2D" parent="."]
+position = Vector2(322.2, 14.8)
+scale = Vector2(1.40505, 1)
+color = Color(1, 1, 1, 0.270588)
+shadow_enabled = true
+texture = ExtResource("7_ck32o")
+texture_scale = 1.3
+
+[node name="Headlight2" type="PointLight2D" parent="."]
+position = Vector2(316, 15.8)
+scale = Vector2(1.35995, 1)
+color = Color(1, 1, 1, 0.270588)
+shadow_enabled = true
+texture = ExtResource("7_ck32o")
+texture_scale = 1.35
 
 [node name="Shadow" type="TextureRect" parent="."]
 offset_left = -118.0
@@ -116,11 +136,22 @@ scale_amount_max = 0.3
 scale_amount_curve = SubResource("Curve_k508y")
 color_ramp = SubResource("Gradient_mlyhb")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+[node name="TruckBody" type="Sprite2D" parent="."]
+z_index = 1
+texture_filter = 1
+texture = ExtResource("4_h2234")
+
+[node name="Inventory" type="Node2D" parent="TruckBody"]
+z_index = -1
+position = Vector2(10, 0)
+script = ExtResource("3_0y4wk")
+
+[node name="TruckWheels" type="AnimatedSprite2D" parent="."]
+z_index = 1
 texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_t8ebb")
 animation = &"drive"
-frame_progress = 0.396319
+frame_progress = 0.354377
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 visible = false
@@ -128,5 +159,12 @@ position = Vector2(0, 29)
 shape = SubResource("RectangleShape2D_n73r5")
 
 [node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(186, 0)
 zoom = Vector2(1.5, 1.5)
 position_smoothing_enabled = true
+
+[node name="BrakeLight" type="PointLight2D" parent="."]
+position = Vector2(-97.5, 33.7513)
+scale = Vector2(0.587891, 0.292486)
+color = Color(1, 0, 0, 1)
+texture = ExtResource("6_8duo5")

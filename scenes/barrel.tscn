@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://cxmfiqf53ddey"]
+
+[ext_resource type="Texture2D" uid="uid://dtaom3lln5x28" path="res://art/fuel_barrel.png" id="1_hmgv8"]
+
+[node name="Barrel0" type="Sprite2D"]
+position = Vector2(17, 2)
+scale = Vector2(0.429687, 0.429687)
+texture = ExtResource("1_hmgv8")
