@@ -82,6 +82,7 @@ stream = ExtResource("5_liky8")
 volume_db = -5.0
 
 [node name="tutorial_panel" type="ColorRect" parent="."]
+visible = false
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -110,7 +111,7 @@ text = "[b]Gameplay[/b]
 
 You need 40  [color=cyan]scrap[/color] to build the MacGuffin and escape this doomed planet!
 
-You need  [color=orange]fuel[/color] to keep the engine running which will charge the [color=cyan]battery[/color]
+You need [color=orange]fuel[/color] to keep the engine running which will charge the [color=cyan]battery[/color]
 
 Harvest [color=cyan]scrap[/color] and extra [color=orange]fuel[/color] from [color=brown]Underground[/color]
 
