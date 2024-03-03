@@ -1,7 +1,7 @@
 extends Node2D
 
 const IDLE_POS = Vector2(-40, 40)
-const CRANE_LENGTH = 400.0
+const CRANE_LENGTH = 600.0
 
 @onready var crane_mount = $Body/Mount
 @onready var magnet_mount = $Magnet/Mount
@@ -50,7 +50,7 @@ func _physics_process(delta: float) -> void:
 
 	# handle crane movement
 	var new_position = magnet.position + Vector2(move_x, move_y)
-	new_position.x = clamp(new_position.x, IDLE_POS.x - 225, IDLE_POS.x + 100)
+	new_position.x = clamp(new_position.x, IDLE_POS.x - 225, IDLE_POS.x + 150) #distance crane can move left/right
 	new_position.y = clamp(new_position.y, IDLE_POS.y, IDLE_POS.y + CRANE_LENGTH)
 
 	magnet.position = new_position

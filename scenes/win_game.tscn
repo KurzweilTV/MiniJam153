@@ -1,0 +1,109 @@
+[gd_scene load_steps=5 format=3 uid="uid://cld76wkm4ljwg"]
+
+[ext_resource type="FontFile" uid="uid://q2kyip6t0n56" path="res://fonts/Kenney Future Square.ttf" id="1_6cy43"]
+
+[sub_resource type="GDScript" id="GDScript_8oud3"]
+script/source = "extends CanvasLayer
+
+
+func _on_play_again_button_pressed() -> void:
+	Truck.reset_game()
+
+func _on_quit_pressed() -> void:
+	Truck.quit_game()
+"
+
+[sub_resource type="LabelSettings" id="LabelSettings_gu4oj"]
+font = ExtResource("1_6cy43")
+font_size = 121
+
+[sub_resource type="LabelSettings" id="LabelSettings_lq6k6"]
+font = ExtResource("1_6cy43")
+font_size = 12
+
+[node name="WinGame" type="CanvasLayer"]
+process_mode = 3
+script = SubResource("GDScript_8oud3")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -471.0
+offset_top = -233.0
+offset_right = 471.0
+offset_bottom = 233.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+color = Color(0, 0, 0, 0.54902)
+
+[node name="Label" type="Label" parent="ColorRect"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -254.0
+offset_right = 254.0
+offset_bottom = 160.0
+grow_horizontal = 2
+text = "Winner!"
+label_settings = SubResource("LabelSettings_gu4oj")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label2" type="Label" parent="ColorRect"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -217.0
+offset_top = -54.0
+grow_horizontal = 0
+grow_vertical = 0
+text = "Thank you for playing
+Feedback on itch is appreciated "
+label_settings = SubResource("LabelSettings_lq6k6")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="PlayAgain" type="Button" parent="ColorRect"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -161.0
+offset_top = -41.0
+offset_right = 161.0
+offset_bottom = 41.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("1_6cy43")
+theme_override_font_sizes/font_size = 51
+text = "Play Again?"
+
+[node name="Quit" type="Button" parent="ColorRect"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -162.0
+offset_top = -162.0
+offset_right = 160.0
+offset_bottom = -80.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_fonts/font = ExtResource("1_6cy43")
+theme_override_font_sizes/font_size = 51
+text = "Quit"
+
+[connection signal="pressed" from="ColorRect/PlayAgain" to="." method="_on_play_again_button_pressed"]
+[connection signal="pressed" from="ColorRect/Quit" to="." method="_on_quit_pressed"]

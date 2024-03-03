@@ -1,6 +1,10 @@
-[gd_scene load_steps=3 format=3 uid="uid://cxmfiqf53ddey"]
+[gd_scene load_steps=4 format=3 uid="uid://cxmfiqf53ddey"]
 
 [ext_resource type="Texture2D" uid="uid://dtaom3lln5x28" path="res://art/fuel_barrel.png" id="1_hmgv8"]
+
+[sub_resource type="GDScript" id="GDScript_frv67"]
+script/source = "extends \"res://scenes/debris.gd\"
+"
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_p8e6f"]
 size = Vector2(18, 24)
@@ -10,6 +14,7 @@ collision_layer = 2
 collision_mask = 2
 gravity_scale = 1.66533e-16
 can_sleep = false
+script = SubResource("GDScript_frv67")
 
 [node name="Sprite" type="Sprite2D" parent="."]
 scale = Vector2(0.429687, 0.429687)

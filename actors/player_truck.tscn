@@ -33,44 +33,21 @@ colors = PackedColorArray(0.00298022, 0.0126157, 0.080883, 0.776471, 0.556863, 0
 resource_name = "visual_inventory"
 script/source = "extends Node2D
 
-@onready var barrel_1: Sprite2D = $Barrel1
-@onready var barrel_2: Sprite2D = $Barrel2
-@onready var barrel_3: Sprite2D = $Barrel3
-@onready var barrel_4: Sprite2D = $Barrel4
-@onready var barrel_5: Sprite2D = $Barrel5
+@onready var barrels: Array = [$Barrel1, $Barrel2, $Barrel3, $Barrel4, $Barrel5]
 
 func _process(delta: float) -> void:
 	update_barrel_visibility()
 
 func update_barrel_visibility():
 	# Hide all barrels initially
-	barrel_1.visible = false
-	barrel_2.visible = false
-	barrel_3.visible = false
-	barrel_4.visible = false
-	barrel_5.visible = false
+	for barrel in barrels:
+		barrel.visible = false
 	
-	match Truck.barrels:
-		1:
-			barrel_1.visible = true
-		2:
-			barrel_1.visible = true
-			barrel_2.visible = true
-		3:
-			barrel_1.visible = true
-			barrel_2.visible = true
-			barrel_3.visible = true
-		4:
-			barrel_1.visible = true
-			barrel_2.visible = true
-			barrel_3.visible = true
-			barrel_4.visible = true
-		5:
-			barrel_1.visible = true
-			barrel_2.visible = true
-			barrel_3.visible = true
-			barrel_4.visible = true
-			barrel_5.visible = true
+	# Show barrels up to the number the Truck has, capping at the max number of barrel sprites
+	var num_barrels_to_show = min(Truck.barrels, barrels.size())
+	for i in range(num_barrels_to_show):
+		barrels[i].visible = true
+
 "
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_fbknl"]
@@ -300,7 +277,7 @@ position = Vector2(0, 41)
 script = ExtResource("9_r4wf2")
 
 [node name="Beam" type="RayCast2D" parent="Sonar"]
-target_position = Vector2(2.08165e-12, 250)
+target_position = Vector2(2.08165e-12, 400)
 collision_mask = 3
 
 [connection signal="timeout" from="FuelTimer" to="." method="_on_fuel_timer_timeout"]

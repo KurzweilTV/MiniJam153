@@ -30,8 +30,6 @@ func toggle_deployment() -> void:
 		magnet_cam.enabled = false
 		main_cam.enabled = true
 
-func switch_camera(deployed: bool) -> void:
-	pass
 
 func _physics_process(delta: float) -> void:
 	handle_movement(delta)

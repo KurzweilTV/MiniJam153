@@ -2,8 +2,8 @@ extends Node
 
 const max_fuel : float = 100.0
 const max_battery : float = 100.0
-const max_barrels : int = 54
-const max_scrap : int = 10
+const max_barrels : int = 5
+const max_scrap : int = 40
 const fuel_normal_burn : float = 0.5
 const fuel_increased_burn : float = 4.0
 
@@ -20,9 +20,14 @@ var fuel : float = 100.0
 func _ready() -> void:
 	reset_game()
 
+func _process(delta: float) -> void:
+	check_state()
+
 func add_barrel():
 	if barrels < max_barrels:
 		Truck.barrels += 1
+	if barrels > max_barrels:
+		barrels = max_barrels
 
 func add_scrap():
 	scrap_count += 1
@@ -45,9 +50,31 @@ func idle_rpm():
 	fuel_burn_rate = fuel_normal_burn
 
 func reset_game():
+	get_tree().paused = false
 	deployed = false
 	barrels = 0
 	scrap_count = 0
 	fuel = 100.0
 	battery = 90.0
-	get_tree().reload_current_scene()
+	get_tree().call_deferred("reload_current_scene")
+	
+func quit_game():
+	get_tree().quit()
+	
+func check_state():
+	if scrap_count == max_scrap:
+		win_game()
+	
+func lose_game():
+	get_tree().paused = true
+
+func win_game():
+	get_tree().paused = true
+	var ui_scene = get_node("/root/Desert/Ui")
+	var win_scene = preload("res://scenes/win_game.tscn")
+	var you_win_instance = win_scene.instantiate()
+	you_win_instance
+	ui_scene.add_child(you_win_instance)
+
+
+	
