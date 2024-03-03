@@ -1,0 +1,128 @@
+[gd_scene load_steps=10 format=3 uid="uid://dga8rp2l6jsu8"]
+
+[ext_resource type="Texture2D" uid="uid://d36hnoaqxecr" path="res://art/fuelicon.png" id="1_hvm2u"]
+[ext_resource type="Script" path="res://scenes/ui.gd" id="1_p46l6"]
+[ext_resource type="FontFile" uid="uid://q2kyip6t0n56" path="res://fonts/Kenney Future Square.ttf" id="2_4xae8"]
+[ext_resource type="StyleBox" uid="uid://c0xjerslyntk3" path="res://art/styles/background.tres" id="3_noevw"]
+[ext_resource type="Texture2D" uid="uid://b7ncvge5itak5" path="res://art/batteryicon.png" id="4_18cye"]
+[ext_resource type="Texture2D" uid="uid://fh7hb71ub4im" path="res://art/gear_icon.png" id="6_fo3vg"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_x34wf"]
+bg_color = Color(1, 0.67451, 0.129412, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0, 0, 0, 1)
+border_blend = true
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pwc44"]
+bg_color = Color(0.219608, 0.67451, 0.976471, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0, 0, 0, 1)
+border_blend = true
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ugjlt"]
+bg_color = Color(0.219608, 0.67451, 0.0862745, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0, 0, 0, 1)
+border_blend = true
+
+[node name="Ui" type="CanvasLayer"]
+script = ExtResource("1_p46l6")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+offset_left = 895.0
+offset_top = 7.0
+offset_right = 1146.0
+offset_bottom = 159.0
+color = Color(0.705882, 1, 1, 0.247059)
+
+[node name="FuelBar" type="ProgressBar" parent="."]
+offset_left = 945.0
+offset_top = 13.0
+offset_right = 1139.0
+offset_bottom = 53.0
+tooltip_text = "Fuel Remaining"
+theme_override_fonts/font = ExtResource("2_4xae8")
+theme_override_font_sizes/font_size = 22
+theme_override_styles/background = ExtResource("3_noevw")
+theme_override_styles/fill = SubResource("StyleBoxFlat_x34wf")
+step = 0.5
+value = 55.0
+rounded = true
+fill_mode = 1
+
+[node name="FuelIcon" type="Sprite2D" parent="."]
+position = Vector2(925, 32)
+scale = Vector2(0.59375, 0.59375)
+texture = ExtResource("1_hvm2u")
+
+[node name="BatteryBar" type="ProgressBar" parent="."]
+offset_left = 945.0
+offset_top = 61.0
+offset_right = 1139.0
+offset_bottom = 101.0
+tooltip_text = "Battery Remaining"
+theme_override_fonts/font = ExtResource("2_4xae8")
+theme_override_font_sizes/font_size = 22
+theme_override_styles/background = ExtResource("3_noevw")
+theme_override_styles/fill = SubResource("StyleBoxFlat_pwc44")
+step = 0.5
+value = 55.0
+rounded = true
+fill_mode = 1
+
+[node name="BatIcon" type="Sprite2D" parent="."]
+position = Vector2(921, 79)
+scale = Vector2(1.38281, 1.25781)
+texture = ExtResource("4_18cye")
+
+[node name="ScrapBar" type="ProgressBar" parent="."]
+offset_left = 944.0
+offset_top = 109.0
+offset_right = 1140.0
+offset_bottom = 149.0
+tooltip_text = "Scrap Collected"
+theme_override_fonts/font = ExtResource("2_4xae8")
+theme_override_font_sizes/font_size = 22
+theme_override_styles/background = ExtResource("3_noevw")
+theme_override_styles/fill = SubResource("StyleBoxFlat_ugjlt")
+max_value = 10.0
+step = 1.0
+value = 3.0
+rounded = true
+fill_mode = 1
+show_percentage = false
+
+[node name="Label" type="Label" parent="ScrapBar"]
+layout_mode = 0
+offset_right = 195.0
+offset_bottom = 39.0
+theme_override_fonts/font = ExtResource("2_4xae8")
+theme_override_font_sizes/font_size = 22
+text = "Scrap: 0 / 10"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ScrapIcon" type="Sprite2D" parent="."]
+position = Vector2(921.953, 129)
+scale = Vector2(0.751466, 0.741721)
+texture = ExtResource("6_fo3vg")
+
+[node name="Button" type="Button" parent="."]
+offset_left = 10.0
+offset_top = 13.0
+offset_right = 101.0
+offset_bottom = 44.0
+theme_override_fonts/font = ExtResource("2_4xae8")
+theme_override_font_sizes/font_size = 16
+text = "Reset"
+
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]

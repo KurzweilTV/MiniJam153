@@ -1,0 +1,56 @@
+[gd_scene load_steps=6 format=3 uid="uid://dppyfcsfhl4vr"]
+
+[ext_resource type="Texture2D" uid="uid://c3efrd5nftx8f" path="res://art/crane.png" id="1_ala8w"]
+[ext_resource type="Script" path="res://actors/crane.gd" id="1_fcy63"]
+[ext_resource type="Texture2D" uid="uid://hwlqp8mq50fy" path="res://art/magnet.png" id="2_bor24"]
+[ext_resource type="Script" path="res://scripts/Magnet.gd" id="4_w66ho"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_bk63k"]
+radius = 42.5093
+
+[node name="Crane" type="Node2D"]
+script = ExtResource("1_fcy63")
+
+[node name="Body" type="Sprite2D" parent="."]
+texture_filter = 1
+position = Vector2(1, -1)
+rotation = 0.000821822
+scale = Vector2(0.229706, 0.229706)
+texture = ExtResource("1_ala8w")
+
+[node name="Mount" type="Marker2D" parent="Body"]
+position = Vector2(-169.846, -78.2214)
+
+[node name="Chain" type="Line2D" parent="."]
+z_index = 2
+points = PackedVector2Array(-38, -19, -38, 40)
+width = 4.0
+default_color = Color(0.00392157, 0.00392157, 0.00392157, 1)
+
+[node name="Magnet" type="Sprite2D" parent="."]
+z_index = 2
+position = Vector2(-38, 41)
+scale = Vector2(0.447572, 0.450335)
+texture = ExtResource("2_bor24")
+script = ExtResource("4_w66ho")
+
+[node name="Mount" type="Marker2D" parent="Magnet"]
+position = Vector2(-3.8147e-06, 6.6617)
+
+[node name="MagRange" type="Area2D" parent="Magnet"]
+collision_layer = 2
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Magnet/MagRange"]
+position = Vector2(0, 26.6468)
+shape = SubResource("CircleShape2D_bk63k")
+debug_color = Color(0.94902, 0, 0.580392, 0.419608)
+
+[node name="AttachPoint" type="Marker2D" parent="Magnet/MagRange"]
+position = Vector2(0, 31.088)
+
+[node name="Camera2D" type="Camera2D" parent="Magnet"]
+enabled = false
+zoom = Vector2(3, 3)
+
+[connection signal="body_entered" from="Magnet/MagRange" to="Magnet" method="_on_mag_range_body_entered"]
