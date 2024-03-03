@@ -4,15 +4,19 @@ const max_fuel : float = 100.0
 const max_battery : float = 100.0
 const max_barrels : int = 5
 const max_scrap : int = 40
-const fuel_normal_burn : float = 0.5
+const fuel_normal_burn : float = 1.0
 const fuel_increased_burn : float = 4.0
 
+var engine_running: bool = false
 var deployed : bool = false
+var sonar_enabled : bool = false
+
 var barrels : int = 0
 var fuel_burn_rate : float = 0.5
-var batt_charge_rate : float = 1.0
-var barrel_fuel : float = 50.0
+var batt_charge_rate : float = 0
+var barrel_fuel : float = 40.0
 var scrap_count : int = 0
+var battery_usage : float = 0
 
 var battery : float = 90.0
 var fuel : float = 100.0
@@ -41,7 +45,17 @@ func add_fuel(amount):
 	
 func tick_engine():
 	fuel -= fuel_burn_rate
-	battery += batt_charge_rate
+	tick_battery()
+
+
+func tick_battery():
+	if sonar_enabled:
+		battery_usage = 4
+	else:
+		battery_usage = 0
+	
+	var total_usage = batt_charge_rate - battery_usage
+	battery += total_usage
 	
 func high_rpm():
 	fuel_burn_rate = fuel_increased_burn
@@ -49,10 +63,19 @@ func high_rpm():
 func idle_rpm():
 	fuel_burn_rate = fuel_normal_burn
 
+func start_game():
+	var game_scene : PackedScene = preload("res://scenes/main.tscn")
+	barrels = 1
+	scrap_count = 0
+	fuel = 100.0
+	battery = 90.0
+	get_tree().change_scene_to_packed(game_scene)
+	
+
 func reset_game():
 	get_tree().paused = false
 	deployed = false
-	barrels = 0
+	barrels = 1
 	scrap_count = 0
 	fuel = 100.0
 	battery = 90.0

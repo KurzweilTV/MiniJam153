@@ -8,10 +8,10 @@ var item_a_scene = preload(\"res://scenes/barrel.tscn\")
 var item_b_scene = preload(\"res://scenes/debris.tscn\")
 
 # Spawn probabilities
-var probability_item_a := 0.3 # 70% chance to spawn Item A
+var probability_item_a := 0.1 # 10% chance to spawn Item A
 
 # Controls the density of the spawned items
-var spawn_count := 500 # The number of items to spawn
+var spawn_count := 1000 # The number of items to spawn
 var min_spacing := 50 # Minimum distance between spawned items
 
 func _ready():

@@ -14,11 +14,13 @@ var deceleration: float = 5
 var brake_force: float = 40
 var accelerating: bool = false
 var braking: bool = false
-var engine_running: bool = true
+
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("toggle_deploy"):
 		toggle_deployment()
+	if event.is_action_pressed("toggle_sonar"):
+		Truck.sonar_enabled = !Truck.sonar_enabled
 
 func toggle_deployment() -> void:
 	Truck.deployed = !Truck.deployed
@@ -67,7 +69,7 @@ func apply_movement(direction: float, delta: float) -> void:
 		
 	if Truck.deployed:
 		braking = true
-		velocity.x -= brake_force * delta
+		velocity.x -= (brake_force * 2) * delta
 
 func apply_rotation(rotation_deg: float, duration: float) -> void:
 	var tween = create_tween()
@@ -94,7 +96,7 @@ func update_wheels_animation() -> void:
 		wheels.stop()
 
 func _process(delta: float) -> void:
-	if not Truck.deployed and engine_running:
+	if not Truck.deployed and Truck.engine_running:
 		accelerating = Input.is_action_pressed("accelerate")
 		braking = Input.is_action_pressed("brake")
 	else:
@@ -102,22 +104,24 @@ func _process(delta: float) -> void:
 		braking = false
 		
 	handle_fuel_usage()
+	toggle_sonar()
+	check_engine()
 
 func handle_fuel_usage():
 	if Truck.fuel <= 0.0: 
 		if Truck.barrels > 0:
-			engine_running = true
+			Truck.engine_running = true
 			Truck.add_fuel(Truck.barrel_fuel)
 			Truck.remove_barrel()
 		else:
-			engine_running = false
-			$Smoke.emitting = false
-			$SmokeIdle.emitting = false
+			Truck.engine_running = false
 	
 	if accelerating:
 		Truck.high_rpm()
 	else:
 		Truck.idle_rpm()
+		
+	if Truck.fuel < 0: Truck.fuel == 0
 
 func adjust_particle_output():
 	var p1 = $TruckWheels/SandParticles
@@ -146,10 +150,39 @@ func _on_fuel_timer_timeout() -> void:
 	Truck.tick_engine()
 
 func turn_lights_on():
-	$TruckBody/Headlight.show()
-	$TruckBody/Headlight2.show()
-	
+	$TruckBody/Headlight.enabled = true
+	$TruckBody/Headlight2.enabled = true
 	
 func turn_lights_off():
-	$TruckBody/Headlight.hide()
-	$TruckBody/Headlight2.hide()
+	$TruckBody/Headlight.enabled = false
+	$TruckBody/Headlight2.enabled = false
+
+func toggle_sonar():
+	var sonar_beam: RayCast2D = $Sonar/Beam
+	var sonar_light = $Sonar/SonarLight
+	if Truck.sonar_enabled:
+		sonar_light.enabled = true
+		sonar_beam.enabled = true
+	else:
+		sonar_light.enabled = false
+		sonar_beam.enabled = false		
+		
+
+func check_engine():
+	if !Truck.engine_running and Input.is_action_just_pressed("start_engine") and Truck.fuel > 0:
+		Truck.engine_running = true
+		Truck.battery -= 10
+	
+	if !Truck.engine_running:
+		turn_lights_off()
+		$Smoke.emitting = false
+		$SmokeIdle.emitting = false
+		$Sonar/SonarLight.enabled = false
+		$BrakeLight.enabled = false
+		Truck.batt_charge_rate = 0.0
+	else:
+		Truck.batt_charge_rate = 1.0
+		$SmokeIdle.emitting = true
+		$BrakeLight.enabled = true
+		
+		

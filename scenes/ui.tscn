@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://dga8rp2l6jsu8"]
+[gd_scene load_steps=12 format=3 uid="uid://dga8rp2l6jsu8"]
 
 [ext_resource type="Texture2D" uid="uid://d36hnoaqxecr" path="res://art/fuelicon.png" id="1_hvm2u"]
 [ext_resource type="Script" path="res://scenes/ui.gd" id="1_p46l6"]
@@ -6,6 +6,8 @@
 [ext_resource type="StyleBox" uid="uid://c0xjerslyntk3" path="res://art/styles/background.tres" id="3_noevw"]
 [ext_resource type="Texture2D" uid="uid://b7ncvge5itak5" path="res://art/batteryicon.png" id="4_18cye"]
 [ext_resource type="Texture2D" uid="uid://fh7hb71ub4im" path="res://art/gear_icon.png" id="6_fo3vg"]
+[ext_resource type="Texture2D" uid="uid://dd7v47nun4qsi" path="res://art/radar_on.png" id="7_7m30k"]
+[ext_resource type="Texture2D" uid="uid://b60gixy0k3c4d" path="res://art/radar_off.png" id="8_p3yhs"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_x34wf"]
 bg_color = Color(1, 0.67451, 0.129412, 1)
@@ -47,6 +49,7 @@ grow_horizontal = 0
 color = Color(0.705882, 1, 1, 0.247059)
 
 [node name="FuelBar" type="ProgressBar" parent="ColorRect"]
+layout_mode = 0
 offset_left = 50.0
 offset_top = 6.0
 offset_right = 244.0
@@ -67,6 +70,7 @@ scale = Vector2(0.59375, 0.59375)
 texture = ExtResource("1_hvm2u")
 
 [node name="BatteryBar" type="ProgressBar" parent="ColorRect"]
+layout_mode = 0
 offset_left = 50.0
 offset_top = 54.0
 offset_right = 244.0
@@ -87,6 +91,7 @@ scale = Vector2(1.38281, 1.25781)
 texture = ExtResource("4_18cye")
 
 [node name="ScrapBar" type="ProgressBar" parent="ColorRect"]
+layout_mode = 0
 offset_left = 49.0
 offset_top = 102.0
 offset_right = 245.0
@@ -119,6 +124,7 @@ scale = Vector2(0.751466, 0.741721)
 texture = ExtResource("6_fo3vg")
 
 [node name="Button" type="Button" parent="ColorRect"]
+layout_mode = 0
 offset_left = -885.0
 offset_top = 6.0
 offset_right = -794.0
@@ -128,10 +134,19 @@ theme_override_font_sizes/font_size = 16
 text = "Reset"
 
 [node name="Label" type="Label" parent="."]
+visible = false
 offset_left = 895.0
 offset_top = 163.0
 offset_right = 991.0
 offset_bottom = 186.0
 text = "Debug Label"
+
+[node name="RadarOn" type="Sprite2D" parent="."]
+position = Vector2(935, 188)
+texture = ExtResource("7_7m30k")
+
+[node name="RadarOff" type="Sprite2D" parent="."]
+position = Vector2(935, 188)
+texture = ExtResource("8_p3yhs")
 
 [connection signal="pressed" from="ColorRect/Button" to="." method="_on_button_pressed"]

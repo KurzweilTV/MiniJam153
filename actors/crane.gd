@@ -8,7 +8,7 @@ const CRANE_LENGTH = 600.0
 @onready var chain = $Chain
 @onready var magnet: Sprite2D = $Magnet
 
-var extension_speed: float = 80
+@export var extension_speed: float = 100
 var extending : bool = false
 var retracting : bool = false
 var lean_amount : = 8.0
@@ -25,8 +25,6 @@ func _physics_process(delta: float) -> void:
 	var is_moving = false
 
 	if Input.is_action_just_pressed("toggle_deploy") and not Truck.deployed:
-		reset_magnet()
-	if Input.is_action_just_pressed("reel_in") and Truck.deployed:
 		reset_magnet()
 		
 	# Handle vertical movement (in and out)
