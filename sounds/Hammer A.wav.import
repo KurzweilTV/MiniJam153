@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://bmr8iyf8lmnoo"
+path="res://.godot/imported/Hammer A.wav-0447ceb75f63e2639eb3de98cc9857e6.sample"
+
+[deps]
+
+source_file="res://sounds/Hammer A.wav"
+dest_files=["res://.godot/imported/Hammer A.wav-0447ceb75f63e2639eb3de98cc9857e6.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

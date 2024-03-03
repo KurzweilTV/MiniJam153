@@ -53,4 +53,9 @@ position = Vector2(0, 31.088)
 enabled = false
 zoom = Vector2(3, 3)
 
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="Magnet"]
+position = Vector2(84.9025, -91.0433)
+scale = Vector2(2.23428, 2.22057)
+volume_db = -5.0
+
 [connection signal="body_entered" from="Magnet/MagRange" to="Magnet" method="_on_mag_range_body_entered"]

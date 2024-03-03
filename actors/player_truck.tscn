@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://clmjklxuclfga"]
+[gd_scene load_steps=21 format=3 uid="uid://clmjklxuclfga"]
 
 [ext_resource type="Texture2D" uid="uid://djxtbc6tr2b4e" path="res://art/smoke.png" id="1_oxp80"]
 [ext_resource type="Script" path="res://scripts/player_truck.gd" id="1_xbpno"]
@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://bblkr6mobh0uo" path="res://art/truck_wheels.png" id="5_75xod"]
 [ext_resource type="Texture2D" uid="uid://cjlq75ucwmalf" path="res://art/effects/flare.png" id="6_8duo5"]
 [ext_resource type="Texture2D" uid="uid://ba4dnfuv4a8sw" path="res://art/effects/headlight_beam.png" id="7_ck32o"]
+[ext_resource type="AudioStream" uid="uid://doehhv1l16ksp" path="res://sounds/engine_heavy_loop.mp3" id="7_ckjta"]
 [ext_resource type="PackedScene" uid="uid://dppyfcsfhl4vr" path="res://actors/crane.tscn" id="8_7ejvo"]
 [ext_resource type="Script" path="res://scripts/Sonar.gd" id="9_r4wf2"]
 
@@ -208,6 +209,11 @@ shadow_enabled = true
 texture = ExtResource("7_ck32o")
 texture_scale = 1.35
 
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="TruckBody"]
+stream = ExtResource("7_ckjta")
+pitch_scale = 0.8
+attenuation = 4.14106
+
 [node name="TruckWheels" type="AnimatedSprite2D" parent="."]
 z_index = 1
 texture_filter = 1
@@ -287,5 +293,10 @@ color = Color(0, 0.74902, 0, 1)
 energy = 2.0
 texture = ExtResource("6_8duo5")
 
+[node name="SonarTimer" type="Timer" parent="Sonar"]
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+
 [connection signal="timeout" from="FuelTimer" to="." method="_on_fuel_timer_timeout"]
 [connection signal="timeout" from="ParticleTimer" to="." method="adjust_particle_output"]
+[connection signal="timeout" from="Sonar/SonarTimer" to="Sonar" method="_on_sonar_timer_timeout"]

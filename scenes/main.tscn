@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://8ybxfnajqph6"]
+[gd_scene load_steps=13 format=3 uid="uid://8ybxfnajqph6"]
 
 [ext_resource type="PackedScene" uid="uid://clmjklxuclfga" path="res://actors/player_truck.tscn" id="1_4actx"]
 [ext_resource type="Script" path="res://scenes/game.gd" id="1_10x3d"]
@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://bw4024lhnt85u" path="res://art/sand_texture.jpg" id="4_wq0s6"]
 [ext_resource type="PackedScene" uid="uid://deylvy0paunxm" path="res://scenes/LootSpawner.tscn" id="6_s01jr"]
 [ext_resource type="PackedScene" uid="uid://dga8rp2l6jsu8" path="res://scenes/ui.tscn" id="7_882v0"]
+[ext_resource type="AudioStream" uid="uid://dsqn0n02tn6ha" path="res://sounds/music/GameMain.mp3" id="8_vtylp"]
 
 [sub_resource type="Animation" id="Animation_2l4cf"]
 length = 0.001
@@ -201,3 +202,7 @@ z_index = 100
 position = Vector2(206, 427)
 
 [node name="Ui" parent="." instance=ExtResource("7_882v0")]
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("8_vtylp")
+volume_db = -10.0

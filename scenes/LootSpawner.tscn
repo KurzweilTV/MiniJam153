@@ -8,7 +8,7 @@ var item_a_scene = preload(\"res://scenes/barrel.tscn\")
 var item_b_scene = preload(\"res://scenes/debris.tscn\")
 
 # Spawn probabilities
-var probability_item_a := 0.1 # 10% chance to spawn Item A
+var probability_item_a := 0.1 # 20% chance to spawn Item A
 
 # Controls the density of the spawned items
 var spawn_count := 1000 # The number of items to spawn

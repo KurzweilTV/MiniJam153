@@ -17,6 +17,7 @@ func _process(delta: float) -> void:
 	scrap_label.text = "Scrap: " + str(int(scrap_bar.value)) + " / " + str(int(Truck.max_scrap))
 	$Label.text = "Barrels: " + str(Truck.barrels)
 	manage_sonar_icon()
+	manage_tooltip()
 	
 func _on_button_pressed() -> void:
 	Truck.reset_game()
@@ -28,3 +29,15 @@ func manage_sonar_icon():
 	else:
 		$RadarOn.hide()
 		$RadarOff.show()
+
+
+func _on_refill_button_pressed() -> void:
+	if Truck.barrels > 0:
+		Truck.remove_barrel()
+		Truck.add_fuel(100)
+		
+func manage_tooltip():
+	if Truck.deployed and Truck.has_item:
+		$ReelInHelper.show()
+	else:
+		$ReelInHelper.hide()

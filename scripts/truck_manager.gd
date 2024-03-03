@@ -10,11 +10,13 @@ const fuel_increased_burn : float = 4.0
 var engine_running: bool = false
 var deployed : bool = false
 var sonar_enabled : bool = false
+var has_item : bool = false
+var battery_charging : bool = false
 
 var barrels : int = 0
 var fuel_burn_rate : float = 0.5
-var batt_charge_rate : float = 0
-var barrel_fuel : float = 40.0
+var batt_charge_rate : float = 2
+var barrel_fuel : float = 100.0
 var scrap_count : int = 0
 var battery_usage : float = 0
 
@@ -44,18 +46,22 @@ func add_fuel(amount):
 	fuel += amount
 	
 func tick_engine():
-	fuel -= fuel_burn_rate
-	tick_battery()
+	if engine_running:
+		fuel -= fuel_burn_rate
+		tick_battery()
 
 
 func tick_battery():
+	if battery <= 0:
+		sonar_enabled = false
+		
 	if sonar_enabled:
-		battery_usage = 4
+		battery_usage = 5
 	else:
 		battery_usage = 0
 	
 	var total_usage = batt_charge_rate - battery_usage
-	battery += total_usage
+	if battery_charging: battery += total_usage
 	
 func high_rpm():
 	fuel_burn_rate = fuel_increased_burn
@@ -85,7 +91,7 @@ func quit_game():
 	get_tree().quit()
 	
 func check_state():
-	if scrap_count == max_scrap:
+	if scrap_count >= max_scrap:
 		win_game()
 	
 func lose_game():

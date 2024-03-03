@@ -1,6 +1,6 @@
 extends Node
 
-var num_players = 8
+var num_players = 4
 var bus = "master"
 
 var available = []  # The available players.
@@ -10,8 +10,8 @@ func _ready():
 	# Create the pool of AudioStreamPlayer nodes.
 	for i in num_players:
 		var p = AudioStreamPlayer.new()
-		p.volume_db = -5.0
-		p.pitch_scale = randf_range(0.9, 1.0)
+		#p.volume_db = -5.0
+		#p.pitch_scale = randf_range(0.9, 1.0)
 		add_child(p)
 		available.append(p)
 		p.finished.connect(_on_stream_finished.bind(p))

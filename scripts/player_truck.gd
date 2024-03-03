@@ -16,11 +16,14 @@ var accelerating: bool = false
 var braking: bool = false
 
 
-func _input(event: InputEvent) -> void:
+func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("toggle_deploy"):
 		toggle_deployment()
 	if event.is_action_pressed("toggle_sonar"):
+		Audio.play("res://sounds/Controls Switch A.wav")
 		Truck.sonar_enabled = !Truck.sonar_enabled
+
+
 
 func toggle_deployment() -> void:
 	Truck.deployed = !Truck.deployed
@@ -58,6 +61,7 @@ func apply_movement(direction: float, delta: float) -> void:
 	if direction != 0:
 		velocity.x += direction * acceleration * delta
 		set_smoke_emission(true)
+		
 	elif velocity.x > 0:
 		velocity.x -= deceleration * delta
 		set_smoke_emission(false)
@@ -169,9 +173,14 @@ func toggle_sonar():
 		
 
 func check_engine():
+	var player := $AudioStreamPlayer2D
+	var engine_audio := $TruckBody/AudioStreamPlayer2D
 	if !Truck.engine_running and Input.is_action_just_pressed("start_engine") and Truck.fuel > 0:
 		Truck.engine_running = true
 		Truck.battery -= 10
+		var sound = preload("res://sounds/Ignition C.wav")
+		player.stream = sound
+		player.play()
 	
 	if !Truck.engine_running:
 		turn_lights_off()
@@ -179,10 +188,14 @@ func check_engine():
 		$SmokeIdle.emitting = false
 		$Sonar/SonarLight.enabled = false
 		$BrakeLight.enabled = false
-		Truck.batt_charge_rate = 0.0
+		Truck.battery_charging = false
+
+		if engine_audio.is_playing():
+			engine_audio.stop()
 	else:
-		Truck.batt_charge_rate = 1.0
+		if !engine_audio.is_playing():
+			engine_audio.play()
 		$SmokeIdle.emitting = true
 		$BrakeLight.enabled = true
-		
+		Truck.battery_charging = true
 		
