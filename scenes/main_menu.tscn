@@ -1,0 +1,165 @@
+[gd_scene load_steps=9 format=3 uid="uid://bafmyy4bilqut"]
+
+[ext_resource type="Texture2D" uid="uid://cdyhxolukls8v" path="res://art/project/menu_bg.png" id="1_488q1"]
+[ext_resource type="Script" path="res://globals/buttonclass.gd" id="1_ftc68"]
+[ext_resource type="LabelSettings" uid="uid://bh5gd006dn7gf" path="res://art/styles/LabelSettings.tres" id="2_m281t"]
+[ext_resource type="FontFile" uid="uid://q2kyip6t0n56" path="res://fonts/Kenney Future Square.ttf" id="4_kx6or"]
+[ext_resource type="AudioStream" uid="uid://dsxiltiyk4bpe" path="res://sounds/music/menu.mp3" id="5_liky8"]
+[ext_resource type="Texture2D" uid="uid://dbahpo5qm5yyl" path="res://art/tutorial/truck.png" id="6_u34cr"]
+[ext_resource type="Texture2D" uid="uid://d3vrgsb3p0uls" path="res://art/tutorial/ui.png" id="7_wujb8"]
+
+[sub_resource type="GDScript" id="GDScript_rplcq"]
+script/source = "extends Node
+
+func _ready() -> void:
+	$AudioStreamPlayer.play()
+"
+
+[node name="MainMenu" type="CanvasLayer"]
+script = ExtResource("1_ftc68")
+
+[node name="bg_art" type="Sprite2D" parent="."]
+position = Vector2(642, 324)
+scale = Vector2(1.11285, 1)
+texture = ExtResource("1_488q1")
+
+[node name="menu_panel" type="ColorRect" parent="."]
+offset_left = 36.0
+offset_top = 59.0
+offset_right = 434.0
+offset_bottom = 565.0
+color = Color(0.141176, 0.141176, 0.141176, 0.815686)
+
+[node name="Title" type="Label" parent="menu_panel"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 41.0
+grow_horizontal = 2
+text = "Desert Angler"
+label_settings = ExtResource("2_m281t")
+horizontal_alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="menu_panel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -163.0
+offset_top = -82.0
+offset_right = 163.0
+offset_bottom = 200.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 40
+
+[node name="Start Game" type="Button" parent="menu_panel/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("4_kx6or")
+theme_override_font_sizes/font_size = 42
+text = "Start Game"
+
+[node name="How to Play" type="Button" parent="menu_panel/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("4_kx6or")
+theme_override_font_sizes/font_size = 42
+text = "How to Play"
+
+[node name="Exit" type="Button" parent="menu_panel/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("4_kx6or")
+theme_override_font_sizes/font_size = 42
+text = "Exit
+"
+
+[node name="MusicPlayer" type="Node" parent="."]
+script = SubResource("GDScript_rplcq")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="MusicPlayer"]
+stream = ExtResource("5_liky8")
+volume_db = -5.0
+
+[node name="tutorial_panel" type="ColorRect" parent="."]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -542.0
+offset_top = -282.0
+offset_right = 542.0
+offset_bottom = 282.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.141176, 0.141176, 0.141176, 0.890196)
+
+[node name="RichTextLabel" type="RichTextLabel" parent="tutorial_panel"]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 39.0
+offset_top = -249.0
+offset_right = 1029.0
+offset_bottom = 255.0
+grow_vertical = 2
+bbcode_enabled = true
+text = "[b]Gameplay[/b]
+
+You need 40  [color=cyan]scrap[/color] to build the MacGuffin and escape this doomed planet!
+
+You need [color=orange]fuel[/color] to keep the engine running which will charge the [color=cyan]battery[/color]
+
+Harvest [color=cyan]scrap[/color] and extra [color=orange]fuel[/color] from [color=brown]Underground[/color]
+
+Use your [color=green]sonar[/color] to figure out where to fish up resources, but beware of the [color=cyan]battery[/color] usage!
+
+If you run out of gas, there is a reset button in the corner. Good luck!
+
+[b]Controls[/b]
+[color=orange]Driving[/color]
+D - Drive Forward
+A - Brakes
+
+[color=orange]Crane Operation[/color]
+WASD - Move Crane
+Mouse 1 - Deploy/Undeploy Crane
+Mouse 2 - Sonar
+
+"
+fit_content = true
+
+[node name="Sprite2D" type="Sprite2D" parent="tutorial_panel"]
+position = Vector2(859, 376)
+scale = Vector2(0.571197, 0.571197)
+texture = ExtResource("6_u34cr")
+
+[node name="Sprite2D2" type="Sprite2D" parent="tutorial_panel"]
+position = Vector2(873, 155)
+scale = Vector2(0.736287, 0.736287)
+texture = ExtResource("7_wujb8")
+
+[node name="Button" type="Button" parent="tutorial_panel"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -102.0
+offset_top = -94.0
+offset_right = 102.0
+offset_bottom = -15.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_fonts/font = ExtResource("4_kx6or")
+theme_override_font_sizes/font_size = 46
+text = "Back"
+
+[connection signal="pressed" from="menu_panel/VBoxContainer/Start Game" to="." method="_on_start_game_pressed"]
+[connection signal="pressed" from="menu_panel/VBoxContainer/How to Play" to="." method="_on_how_to_play_pressed"]
+[connection signal="pressed" from="menu_panel/VBoxContainer/Exit" to="." method="_on_exit_pressed"]
+[connection signal="pressed" from="tutorial_panel/Button" to="." method="_on_back_button_pressed"]

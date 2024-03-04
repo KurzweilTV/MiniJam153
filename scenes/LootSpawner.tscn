@@ -1,0 +1,66 @@
+[gd_scene load_steps=3 format=3 uid="uid://deylvy0paunxm"]
+
+[sub_resource type="GDScript" id="GDScript_gcwcp"]
+script/source = "extends Node2D
+
+# Preload the scenes for the loot items
+var item_a_scene = preload(\"res://scenes/barrel.tscn\")
+var item_b_scene = preload(\"res://scenes/debris.tscn\")
+
+# Spawn probabilities
+var probability_item_a := 0.1 # 20% chance to spawn Item A
+
+# Controls the density of the spawned items
+var spawn_count := 1000 # The number of items to spawn
+var min_spacing := 50 # Minimum distance between spawned items
+
+func _ready():
+	randomize() # Ensure random seed for different runs
+	populate_area_with_loot()
+	print(\"Spawned \" + str(get_child_count() - 1) + \"loot items\")
+
+func populate_area_with_loot():
+	var area := $Area2D
+	var collision_shape := area.get_node(\"CollisionShape2D\") as CollisionShape2D
+
+	if collision_shape.shape is RectangleShape2D:
+		var rect := collision_shape.shape as RectangleShape2D
+		for i in range(spawn_count):
+			spawn_loot(rect, area)
+	else:
+		print(\"The collision shape is not a RectangleShape2D. Cannot spawn loot.\")
+
+func spawn_loot(rect: RectangleShape2D, area: Area2D):
+	var attempts := 0
+	var spawned := false
+	while not spawned and attempts < 10: # Avoid infinite loops
+		var spawn_local_position = -rect.extents + Vector2(
+			randf() * rect.extents.x * 2,
+			randf() * rect.extents.y * 2
+		)
+
+		# Convert local position to global position
+		var spawn_global_position := area.to_global(spawn_local_position + area.position)
+
+		var item_scene_to_spawn: PackedScene = item_a_scene if randf() < probability_item_a else item_b_scene
+		var item_instance := item_scene_to_spawn.instantiate()
+		item_instance.global_position = spawn_global_position
+		add_child(item_instance)
+		spawned = true
+
+		attempts += 1
+"
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_fq58i"]
+size = Vector2(53144, 475)
+
+[node name="LootSpawner" type="Node2D"]
+script = SubResource("GDScript_gcwcp")
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(26381, 58.5)
+shape = SubResource("RectangleShape2D_fq58i")
